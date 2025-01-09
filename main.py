@@ -13,11 +13,33 @@ symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
 verification = two_step_ver.TwoStepVer()
 recipient_email = "grzegorz_pawlak@yahoo.com"
-code_correct = False
-# ---------------------------- 2 step Ver --------------------------------------- #
-while not code_correct:
-    verification.send_code(recipient_email)
-    code_correct = verification.verify_code()
+# Wybór metody weryfikacji
+method = simpledialog.askstring("Verification Method",
+                                "Choose verification method:\n"
+                                "1. Send code and enter manually\n"
+                                "2. Send code and brute force automatically")
+# verification_code_correct = False
+# # ---------------------------- 2 step Ver --------------------------------------- #
+# while not verification_code_correct:
+#     verification.send_code(recipient_email)
+#     code_correct = verification.verify_code()
+
+# ---------------------------- 2 step Ver BRUTEFORCE --------------------------------------- #
+if method == "1":
+    # Manual verification
+    verification_code_correct = False
+    while not verification_code_correct:
+        verification.send_code(recipient_email)
+        verification_code_correct = verification.verify_code()
+elif method == "2":
+    # Brute force verification
+    sent_code = verification.send_code(recipient_email)
+    brute_forced_code = verification.brute_force_code(sent_code)
+    if brute_forced_code:
+        print(f"Brute force successful! Code: {brute_forced_code}")
+    else:
+        print("Brute force failed.")
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():

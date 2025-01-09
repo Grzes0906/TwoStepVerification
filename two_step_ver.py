@@ -9,7 +9,7 @@ class TwoStepVer:
 
 
     def send_code(self, recipient_email):
-        self.ver_code = random.randint(100000, 999999)
+        self.ver_code = random.randint(100000, 9999999)
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.starttls()
             smtp.login(self.my_email, self.password)
@@ -26,6 +26,17 @@ class TwoStepVer:
         else:
             messagebox.showerror("Error", "Incorrect verification code.")
             return False
+
+    def brute_force_code(self, actual_code):
+        print("Starting brute force...")
+        for code in range(1, 10000000):  # Six-digit codes
+            print(code)
+            if code == actual_code:
+                print(f"Brute force code found: {code}")
+                return code
+        print("Brute force failed.")
+        return None
+
 
 # Example usage
 
