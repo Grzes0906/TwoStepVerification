@@ -1,15 +1,28 @@
+import itertools
 import smtplib
 import random
+import time
 from tkinter import simpledialog, messagebox
 
+symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+           'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+           'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+           'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+           '!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+TIMEOUT_SECONDS = 5
+
 class TwoStepVer:
+
+
     def __init__(self):
         self.my_email = 'orion20003@gmail.com'
         self.password = 'oole rqoy krlz leuj'
 
 
     def send_code(self, recipient_email):
-        self.ver_code = random.randint(100000, 9999999)
+        # self.ver_code = random.randint(100000, 9999999)
+        self.ver_code = ''.join(random.choice(symbols) for _ in range(8))
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.starttls()
             smtp.login(self.my_email, self.password)
@@ -18,7 +31,7 @@ class TwoStepVer:
 
     def verify_code(self):
         # Create a pop-up input box
-        user_code = simpledialog.askinteger("Verification", "Enter the verification code sent to your email:")
+        user_code = simpledialog.askstring("Verification", "Enter the verification code sent to your email:")
 
         if user_code == self.ver_code:
             messagebox.showinfo("Success", "Verification successful!")
@@ -29,14 +42,24 @@ class TwoStepVer:
 
     def brute_force_code(self, actual_code):
         print("Starting brute force...")
-        for code in range(1, 10000000):  # Six-digit codes
-            print(code)
-            if code == actual_code:
-                print(f"Brute force code found: {code}")
-                return code
+
+        start_time = time.time()
+
+        for length in range(1, 9):
+            for combination in itertools.product(symbols, repeat=length):
+                code = ''.join(combination)
+
+                elapsed_time = time.time() - start_time
+                if elapsed_time > TIMEOUT_SECONDS:
+                    print("Brute force failed due to timeout.")
+                    return None
+
+                print(code)
+                if code == actual_code:
+                    print(f"Brute force code found: {code}")
+                    return code
         print("Brute force failed.")
         return None
-
 
 # Example usage
 
