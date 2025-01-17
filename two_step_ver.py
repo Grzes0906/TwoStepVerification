@@ -22,7 +22,7 @@ class TwoStepVer:
 
     def send_code(self, recipient_email):
         # self.ver_code = random.randint(100000, 9999999)
-        self.ver_code = ''.join(random.choice(symbols) for _ in range(8))
+        self.ver_code = ''.join(random.choice(symbols) for _ in range(3))
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.starttls()
             smtp.login(self.my_email, self.password)
