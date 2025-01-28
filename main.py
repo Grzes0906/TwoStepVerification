@@ -14,7 +14,88 @@ symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 verification = two_step_ver.TwoStepVer()
 recipient_email = "grzegorz_pawlak@yahoo.com"
 
-#main window method
+# User credentials for authentication
+users_db = {"admin": "password123"}
+
+# ---------------------------- AUTHENTICATION WINDOW ---------------------------- #
+def open_authentication_window():
+
+    def login():
+        username = username_entry.get()
+        password = password_entry.get()
+
+        if username in users_db and users_db[username] == password:
+            messagebox.showinfo("Success", "Login successful!")
+            auth_window.destroy()
+            open_verification_window()
+        else:
+            messagebox.showerror("Error", "Invalid username or password.")
+
+    def register():
+        username = username_entry.get()
+        password = password_entry.get()
+
+        if username in users_db:
+            messagebox.showerror("Error", "Username already exists.")
+        elif not username or not password:
+            messagebox.showerror("Error", "Please fill in all fields.")
+        else:
+            users_db[username] = password
+            messagebox.showinfo("Success", "Registration successful! You can now log in.")
+
+    auth_window = Tk()
+    auth_window.title("Authentication")
+    auth_window.config(padx=50, pady=50)
+
+    Label(auth_window, text="Username:").grid(row=0, column=0)
+    username_entry = Entry(auth_window, width=30)
+    username_entry.grid(row=0, column=1)
+
+    Label(auth_window, text="Password:").grid(row=1, column=0)
+    password_entry = Entry(auth_window, width=30, show="*")
+    password_entry.grid(row=1, column=1)
+
+    login_button = Button(auth_window, text="Login", command=login)
+    login_button.grid(row=2, column=0, pady=10)
+
+    register_button = Button(auth_window, text="Register", command=register)
+    register_button.grid(row=2, column=1, pady=10)
+
+    auth_window.mainloop()
+
+# ---------------------------- VERIFICATION WINDOW ---------------------------- #
+def open_verification_window():
+
+    def enter_code():
+        verification_code_correct = False
+        while not verification_code_correct:
+            verification.send_code(recipient_email)
+            verification_code_correct = verification.verify_code()
+            if verification_code_correct:
+                open_main_window()
+
+    def brute_force():
+        sent_code = verification.send_code(recipient_email)
+        brute_forced_code = verification.brute_force_code(sent_code)
+        if brute_forced_code:
+            print(f"Brute force successful! Code: {brute_forced_code}")
+            open_main_window()
+        else:
+            print("Brute force failed.")
+
+    verification_window = Tk()
+    verification_window.title("Two-Step Verification")
+    verification_window.config(padx=50, pady=50)
+
+    enter_code_button = Button(verification_window, text="Enter Code", width=44, command=enter_code)
+    enter_code_button.grid(column=1, row=1, columnspan=2)
+
+    brute_force_button = Button(verification_window, text="Bruteforce Attack", width=44, command=brute_force)
+    brute_force_button.grid(column=4, row=1, columnspan=2)
+
+    verification_window.mainloop()
+
+# ---------------------------- MAIN WINDOW ---------------------------- #
 def open_main_window():
 
     def generate_password():
@@ -132,33 +213,4 @@ def open_main_window():
 
     window.mainloop()
 
-#metod launching manually mail verification
-def enter_code():
-    verification_code_correct = False
-    while not verification_code_correct:
-        verification.send_code(recipient_email)
-        verification_code_correct = verification.verify_code()
-        if verification_code_correct:
-            open_main_window()
-
-#metod launching bruteforce mail verification
-def brute_force():
-    sent_code = verification.send_code(recipient_email)
-    brute_forced_code = verification.brute_force_code(sent_code)
-    if brute_forced_code:
-        print(f"Brute force successful! Code: {brute_forced_code}")
-        open_main_window()
-    else:
-        print("Brute force failed.")
-
-
-# veryfication options window
-verification_window = Tk()
-verification_window.title("Password Manager")
-verification_window.config(padx=50, pady=50)
-enter_code_button = Button( text="Enter_Code", width= 44, command= enter_code)
-enter_code_button.grid(column=1, row=1, columnspan=2)
-
-brute_force_button = Button( text="Bruteforce_attack", width= 44, command= brute_force)
-brute_force_button.grid(column=4, row=1, columnspan=2)
-verification_window.mainloop()
+open_authentication_window()

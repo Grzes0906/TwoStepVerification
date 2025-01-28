@@ -61,5 +61,3 @@ class TwoStepVer:
         print("Brute force failed.")
         return None
 
-# Example usage
-
