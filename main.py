@@ -5,6 +5,8 @@ import pyperclip
 import json
 import two_step_ver
 
+logo_png = None
+
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
            'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
            'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -15,7 +17,7 @@ verification = two_step_ver.TwoStepVer()
 recipient_email = "grzegorz_pawlak@yahoo.com"
 
 # User credentials for authentication
-users_db = {"admin": "password123"}
+users_db = {"admin": ""}
 
 # ---------------------------- AUTHENTICATION WINDOW ---------------------------- #
 def open_authentication_window():
@@ -72,6 +74,7 @@ def open_verification_window():
             verification.send_code(recipient_email)
             verification_code_correct = verification.verify_code()
             if verification_code_correct:
+                verification_window.destroy()
                 open_main_window()
 
     def brute_force():
@@ -79,7 +82,9 @@ def open_verification_window():
         brute_forced_code = verification.brute_force_code(sent_code)
         if brute_forced_code:
             print(f"Brute force successful! Code: {brute_forced_code}")
+            verification_window.destroy()
             open_main_window()
+
         else:
             print("Brute force failed.")
 
@@ -170,17 +175,14 @@ def open_main_window():
             else:
                 messagebox.showerror('Error', 'No details for the website exists')
 
-
-
-    verification_window.destroy()
     window = Tk()
     window.title("Password Manager")
     window.config(padx=50, pady=50)
 
-    canvas = Canvas(window, width=200, height=200)
-    logo_png = PhotoImage(file="logo.png")
-    canvas.create_image(100, 100, image = logo_png)
-    canvas.grid(column=1, row=0)
+    # canvas = Canvas(window, width=200, height=200)
+    # logo_png = PhotoImage(file="logo.png")
+    # canvas.create_image(100, 100, image = logo_png)
+    # canvas.grid(column=1, row=0)
 
     website_label = Label(text="Website:")
     website_label.grid(column=0, row=1)
