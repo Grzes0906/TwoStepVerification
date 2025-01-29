@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 from tkinter import messagebox, simpledialog
 import random
@@ -78,8 +79,9 @@ def open_verification_window():
                 open_main_window()
 
     def brute_force():
-        sent_code = verification.send_code(recipient_email)
-        brute_forced_code = verification.brute_force_code(sent_code)
+        code_length = int(code_length_textbox.get())
+        sent_code = verification.send_code(recipient_email,code_length)
+        brute_forced_code = verification.brute_force_code(sent_code,code_length)
         if brute_forced_code:
             print(f"Brute force successful! Code: {brute_forced_code}")
             verification_window.destroy()
@@ -88,15 +90,26 @@ def open_verification_window():
         else:
             print("Brute force failed.")
 
+    def go_back():
+        verification_window.destroy()
+        open_authentication_window()
+
     verification_window = Tk()
     verification_window.title("Two-Step Verification")
     verification_window.config(padx=50, pady=50)
 
     enter_code_button = Button(verification_window, text="Enter Code", width=44, command=enter_code)
-    enter_code_button.grid(column=1, row=1, columnspan=2)
+    enter_code_button.grid(column=1, row=2, columnspan=2)
+
+    Label(verification_window, text="Verification code length:").grid(row=1, column=4)
+    code_length_textbox = Entry(width=10)
+    code_length_textbox.grid(column=5, row=1, columnspan=1)
 
     brute_force_button = Button(verification_window, text="Bruteforce Attack", width=44, command=brute_force)
-    brute_force_button.grid(column=4, row=1, columnspan=2)
+    brute_force_button.grid(column=4, row=2, columnspan=2)
+
+    back_button = Button(verification_window, text="Back", width=10, command=go_back)
+    back_button.grid(column=0, row=1, columnspan=1)
 
     verification_window.mainloop()
 
@@ -175,6 +188,10 @@ def open_main_window():
             else:
                 messagebox.showerror('Error', 'No details for the website exists')
 
+    def go_back():
+        window.destroy()
+        open_verification_window()
+
     window = Tk()
     window.title("Password Manager")
     window.config(padx=50, pady=50)
@@ -212,6 +229,9 @@ def open_main_window():
 
     search_button = Button( text="Search", width= 14, command= find_password)
     search_button.grid(column=2, row=1)
+
+    back_button = Button(window, text="Back", width=10, command=go_back)
+    back_button.grid(column=0, row=0, columnspan=1)
 
     window.mainloop()
 

@@ -4,13 +4,16 @@ import random
 import time
 from tkinter import simpledialog, messagebox
 
+from click.termui import V
+
 symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
            'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
            'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
            '!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-TIMEOUT_SECONDS = 5
+TIMEOUT_SECONDS = 20
+VERIFICATION_CODE_LENGTH = 4
 
 class TwoStepVer:
 
@@ -20,9 +23,9 @@ class TwoStepVer:
         self.password = 'oole rqoy krlz leuj'
 
 
-    def send_code(self, recipient_email):
+    def send_code(self, recipient_email, code_length):
         # self.ver_code = random.randint(100000, 9999999)
-        self.ver_code = ''.join(random.choice(symbols) for _ in range(3))
+        self.ver_code = ''.join(random.choice(symbols) for _ in range(code_length))
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.starttls()
             smtp.login(self.my_email, self.password)
@@ -40,12 +43,12 @@ class TwoStepVer:
             messagebox.showerror("Error", "Incorrect verification code.")
             return False
 
-    def brute_force_code(self, actual_code):
+    def brute_force_code(self, actual_code, code_length):
         print("Starting brute force...")
 
         start_time = time.time()
 
-        for length in range(1, 9):
+        for length in range(1, code_length+1):
             for combination in itertools.product(symbols, repeat=length):
                 code = ''.join(combination)
 
