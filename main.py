@@ -6,7 +6,7 @@ import pyperclip
 import json
 import two_step_ver
 
-logo_png = None
+#logo_png = None
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
            'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -71,8 +71,9 @@ def open_verification_window():
 
     def enter_code():
         verification_code_correct = False
+        code_length = int(code_length_textbox.get())
         while not verification_code_correct:
-            verification.send_code(recipient_email)
+            verification.send_code(recipient_email, code_length)
             verification_code_correct = verification.verify_code()
             if verification_code_correct:
                 verification_window.destroy()
