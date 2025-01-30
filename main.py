@@ -18,7 +18,7 @@ verification = two_step_ver.TwoStepVer()
 recipient_email = "grzegorz_pawlak@yahoo.com"
 
 # User credentials for authentication
-users_db = {"admin": ""}
+users_db = {"admin": "1234"}
 
 # ---------------------------- AUTHENTICATION WINDOW ---------------------------- #
 def open_authentication_window():

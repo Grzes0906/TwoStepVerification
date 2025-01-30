@@ -12,7 +12,7 @@ symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
            'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
            '!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-TIMEOUT_SECONDS = 20
+TIMEOUT_SECONDS = 30
 VERIFICATION_CODE_LENGTH = 4
 
 class TwoStepVer:
