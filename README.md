@@ -1,17 +1,15 @@
-Opis części demonstracyjnej projektu
-Demonstracja działania weryfikacji dwuetapowej i jej skuteczności wobec ataku brute force
 Aby zademonstrować podstawowe użycie weryfikacji dwuetapowej oraz jej skuteczność wobec ataków, w szczególności typu brute force, został przygotowany program w języku Python służący do zarządzania hasłami. Implementuje on zabezpieczenie MFA oraz pozwala na przetestowanie ataku brute force przeciwko niemu.
-Proces rejestracji i logowania
+Proces rejestracji i logowania:
  
 Po otwarciu aplikacji pojawia się okno umożliwiające rejestrację nowego użytkownika lub zalogowanie się do istniejącego konta.
 1.	Podczas rejestracji, jeśli użytkownik poda nazwę, która już istnieje, lub pominie wymagane pola, wyświetlany jest odpowiedni komunikat o błędzie.
 2.	W przeciwnym wypadku login i hasło użytkownika zostają zapisane w odpowiednim słowniku.
 3.	Przejście dalej jest możliwe dopiero po podaniu poprawnej nazwy użytkownika i hasła – aplikacja sprawdza, czy znajdują się w bazie danych.
  
-Weryfikacja dwuetapowa
+Weryfikacja dwuetapowa:
 Po poprawnym zalogowaniu użytkownik musi przejść weryfikację dwuetapową, która odbywa się poprzez wiadomość e-mail wysyłaną na adres podany w aplikacji. Użytkownik może wybrać długość kodu wysyłanego na maila, a następnie decyduje, jak chce przejść weryfikację:
  
-1.	Ręczne wpisanie kodu (Enter Code)
+1.	Ręczne wpisanie kodu (Enter Code):
  
 a.	Wysyłany jest kod o określonej długości.
 b.	W aplikacji pojawia się pole do jego wpisania.
