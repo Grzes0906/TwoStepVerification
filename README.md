@@ -5,7 +5,7 @@ Po otwarciu aplikacji pojawia się okno umożliwiające rejestrację nowego uży
 1.	Podczas rejestracji, jeśli użytkownik poda nazwę, która już istnieje, lub pominie wymagane pola, wyświetlany jest odpowiedni komunikat o błędzie.
 2.	W przeciwnym wypadku login i hasło użytkownika zostają zapisane w odpowiednim słowniku.
 3.	Przejście dalej jest możliwe dopiero po podaniu poprawnej nazwy użytkownika i hasła – aplikacja sprawdza, czy znajdują się w bazie danych.
- 
+
 Weryfikacja dwuetapowa:
 Po poprawnym zalogowaniu użytkownik musi przejść weryfikację dwuetapową, która odbywa się poprzez wiadomość e-mail wysyłaną na adres podany w aplikacji. Użytkownik może wybrać długość kodu wysyłanego na maila, a następnie decyduje, jak chce przejść weryfikację:
  
